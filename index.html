@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для тебя 💜</title>
+    <style>
+        /* Градиентный фон с анимацией */
+        body {
+            background: linear-gradient(45deg, #8a2be2, #d8a7e3, #c89be6);
+            background-size: 300% 300%;
+            animation: backgroundAnimation 8s infinite alternate;
+            font-family: "Arial", sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            transition: background 1.5s ease-in-out;
+            position: relative;
+        }
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Мерцающие звездочки */
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* Заголовки */
+        h1 {
+            color: white;
+            font-size: 3em;
+            margin-top: 50px;
+            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.8);
+        }
+        h2 {
+            color: white;
+            font-size: 2em;
+            margin-top: 10px;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Кнопки */
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.5);
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #e5b3ff;
+            transform: scale(1.1);
+        }
+
+        /* Сердечки */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            transform: rotate(-45deg);
+            animation: float 5s ease-in-out forwards;
+            opacity: 0.8;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .heart::before { top: -10px; left: 0; }
+        .heart::after { top: 0; left: 10px; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
+            100% { transform: translateY(-300px) rotate(-45deg); opacity: 0; }
+        }
+
+        /* Эффект обнимашек */
+        .hug {
+            background: radial-gradient(circle, rgba(255,182,193,0.8) 0%, rgba(138,43,226,0.8) 100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Звезды -->
+    <div class="stars"></div>
+
+    <h1 id="mainText">Ты у меня самая лучшая!</h1>
+    <h2 id="changingText">Ты делаешь этот мир прекраснее 💜</h2>
+
+    <button onclick="toggleMusic()">🎵 Включить музыку</button>
+    <button onclick="surprise()">✨ Показать сюрприз</button>
+    <button onclick="hug()">🤗 Обнять</button>
+
+    <!-- Музыкальный плеер -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+        Ваш браузер не поддерживает аудиоплеер.
+    </audio>
+
+    <script>
+        // Добавление звездочек в фон
+function createStars() {
+            const starContainer = document.querySelector(".stars");
+            for (let i = 0; i < 50; i++) {
+                let star = document.createElement("div");
+                star.classList.add("star");
+                star.style.left = Math.random() * 100 + "vw";
+                star.style.top = Math.random() * 100 + "vh";
+                star.style.animationDelay = Math.random() * 2 + "s";
+                starContainer.appendChild(star);
+            }
+        }
+        createStars();
+
+        // Музыка
+        let music = document.getElementById("backgroundMusic");
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+
+        // Показать сюрприз
+        function surprise() {
+            document.getElementById("mainText").innerText = "Ты самое чудесное, что есть в моей жизни!";
+            document.getElementById("changingText").innerText = "Спасибо, что ты рядом ❤️";
+            showHearts();
+        }
+
+        // Функция для обнимашек
+        function hug() {
+            document.body.classList.add("hug");
+            setTimeout(() => {
+                document.body.classList.remove("hug");
+            }, 3000);
+        }
+
+        // Сердечки
+        function showHearts() {
+            for (let i = 0; i < 15; i++) {
+                let heart = document.createElement("div");
+                heart.classList.add("heart");
+                document.body.appendChild(heart);
+                let x = Math.random() * window.innerWidth;
+                let y = window.innerHeight;
+                heart.style.left = x + "px";
+                heart.style.top = y + "px";
+                setTimeout(() => { heart.remove(); }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>
